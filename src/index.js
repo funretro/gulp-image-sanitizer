@@ -25,28 +25,39 @@ module.exports = (versions = []) =>
       const metadata = await sharpImage.metadata();
 
       const promises = versions.map(
-        async ({ width, height, fit, position, suffix, force }) => {
+        async ({
+          width,
+          height,
+          fit,
+          position,
+          suffix,
+          maxWidth,
+          maxHeight,
+        }) => {
           const clonedVinyl = file.clone();
           const clonedSharpImage = sharpImage.clone();
-          suffix = suffix || "";
+          let options = {
+            width: maxWidth ? maxWidth : width,
+            height: maxHeight ? maxHeight : height,
+            fit,
+            position,
+          };
+
+          clonedVinyl.extname = `${suffix || ""}${clonedVinyl.extname}`;
 
           if (
-            !force &&
-            (metadata.width >= width || metadata.height >= height)
+            (maxWidth && metadata.width <= maxWidth) ||
+            (maxHeight && metadata.height <= maxHeight)
           ) {
-            try {
-              clonedVinyl.extname = suffix + clonedVinyl.extname;
-              clonedVinyl.contents = await clonedSharpImage
-                .resize({
-                  width,
-                  height,
-                  fit,
-                  position,
-                })
-                .toBuffer();
-            } catch (error) {
-              return this.emit("error", new PluginError(pluginName, error));
-            }
+            return this.push(clonedVinyl);
+          }
+
+          try {
+            clonedVinyl.contents = await clonedSharpImage
+              .resize(options)
+              .toBuffer();
+          } catch (error) {
+            return this.emit("error", new PluginError(pluginName, error));
           }
 
           log(`${pluginName}: created ${clonedVinyl.relative}`);

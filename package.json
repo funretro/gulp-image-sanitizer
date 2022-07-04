@@ -1,11 +1,11 @@
 {
   "name": "gulp-image-sanitizer",
-  "version": "0.1.0",
-  "description": "Gulp plugin to handle images",
+  "version": "1.0.0",
+  "description": "Gulp plugin to handle images size",
   "main": "src/index.js",
-  "repository": "https://github.com/filipelinhare/gulp-image-sanitizer.git",
-  "homepage": "https://github.com/filipelinhare/gulp-image-sanitizer",
-  "bugs": "https://github.com/filipelinhare/gulp-image-sanitizer/issues",
+  "repository": "https://github.com/funretro/gulp-image-sanitizer.git",
+  "homepage": "https://github.com/funretro/gulp-image-sanitizer",
+  "bugs": "https://github.com/funretro/gulp-image-sanitizer/issues",
   "author": "Filipe Linhares",
   "license": "MIT",
   "keywords": [
@@ -23,12 +23,12 @@
     "types"
   ],
   "devDependencies": {
-    "gulp": "^4.0.2"
-  },
-  "dependencies": {
-    "log-update": "^4.0.0",
+    "gulp": "^4.0.2",
     "plugin-error": "^1.0.1",
     "sharp": "^0.29.3"
+  },
+  "dependencies": {
+    "log-update": "^4.0.0"
   },
   "peerDependencies": {
     "gulp": "^4.0.2"
